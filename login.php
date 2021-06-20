@@ -20,8 +20,10 @@
 
 <body>
     <nav class="navbar navbar-dark navbar-expand-lg fixed-top bg-white portfolio-navbar gradient">
-        <div class="container"><?php
+        <div class="container"><div id="phpcode" hidden>
+<?php
 // Global code that gets ran on every page.
+// Put in a hidden div so I don't have to look at it in BSS.
 
 setlocale(LC_MONETARY, "en_GB.utf8");
 // This db variable gets used for all queries in this request.
@@ -75,7 +77,11 @@ function logout() {
     $stmt->execute();
     session_abort();
 }
-?><a class="navbar-brand logo" href="/">Coinflip</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navbarNav"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+?>
+    <script>
+        document.getElementById("phpcode").remove();
+    </script>
+</div><a class="navbar-brand logo" href="/">Coinflip</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navbarNav"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarNav"><ul class="navbar-nav ms-auto">
     <?php
         $loggedIn = session_status() === PHP_SESSION_ACTIVE;

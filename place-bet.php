@@ -20,8 +20,10 @@
 
 <body>
     <nav class="navbar navbar-dark navbar-expand-lg fixed-top bg-white portfolio-navbar gradient">
-        <div class="container"><?php
+        <div class="container"><div id="phpcode" hidden>
+<?php
 // Global code that gets ran on every page.
+// Put in a hidden div so I don't have to look at it in BSS.
 
 setlocale(LC_MONETARY, "en_GB.utf8");
 // This db variable gets used for all queries in this request.
@@ -75,7 +77,11 @@ function logout() {
     $stmt->execute();
     session_abort();
 }
-?><a class="navbar-brand logo" href="/">Coinflip</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navbarNav"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+?>
+    <script>
+        document.getElementById("phpcode").remove();
+    </script>
+</div><a class="navbar-brand logo" href="/">Coinflip</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navbarNav"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarNav"><ul class="navbar-nav ms-auto">
     <?php
         $loggedIn = session_status() === PHP_SESSION_ACTIVE;
@@ -89,32 +95,7 @@ function logout() {
 </div>
         </div>
     </nav>
-    <main class="page"><?php
-if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["username"]) && isset($_POST["password"])) {
-    if (session_status() === PHP_SESSION_ACTIVE) alert("danger", "You are already logged in.");
-    else {
-        $stmt = $db->prepare("SELECT * FROM users WHERE LOWER(username)=? OR LOWER(email)=?;");
-        $stmt->bind_param("ss", strtolower($_POST["username"]), strtolower($_POST["username"]));
-        if (!$stmt->execute()) alert("danger", "An unknown error occurred while logging in.");
-        else {
-            $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-            if (count($result) != 1 || !password_verify($_POST["password"], $result[0]["password"])) alert("danger", "The given email and password combination is incorrect.");
-            else {
-                session_start();
-                $sessid = session_id();
-                $stmt = $db->prepare("INSERT INTO sessions (id, user, expires) VALUES (?, ?, ?);");
-                $stmt->bind_param("sis", $sessid, $result[0]["id"], (new DateTime())->setTimestamp(strtotime("+1 week"))->format("Y-m-d H:i:s"));
-                if (!$stmt->execute()) alert("danger", "An unknown error occurred while logging in.");
-                else {
-                    session_init();
-                    alert("success", "You have successfully logged in.");
-                    echo "<script>setTimeout(() => window.location.pathname = '/', 2500);</script>";
-                }
-            }
-        }
-    }
-}
-?>
+    <main class="page">
         <section class="portfolio-block">
             <div class="container">
                 <div class="heading" style="margin-bottom: 30px;">
