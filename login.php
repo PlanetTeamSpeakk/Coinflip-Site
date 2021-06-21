@@ -63,7 +63,7 @@ function session_init() {
                 $keys = array_keys($result);
                 foreach ($keys as &$key)
                     if ($key != "password") // Ignore the password, obviously.
-                        $_SESSION[$key] = $result[$key];
+                        $_SESSION[$key] = htmlspecialchars($result[$key]);
             }
         } else logout();
     } else session_abort();
@@ -114,7 +114,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["username"]) && isset(
                 else {
                     session_init();
                     alert("success", "You have successfully logged in.");
-                    echo "<script>setTimeout(() => window.location.pathname = '/', 2500);</script>";
+                    echo "<script>setTimeout(() => window.location.pathname = '/', 1500);</script>";
                 }
             }
         }
@@ -130,7 +130,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["username"]) && isset(
                     <div>
                         <div class="row">
                             <div class="col">
-                                <div class="mb-3"><label class="form-label">Username or email</label><input class="form-control" type="text" id="username" required="" minlength="3" maxlength="16" name="username"></div>
+                                <div class="mb-3"><label class="form-label">Username or email</label><input class="form-control" type="text" id="username" name="username" required=""></div>
                             </div>
                         </div>
                     </div>

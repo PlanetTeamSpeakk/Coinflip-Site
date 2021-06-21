@@ -63,7 +63,7 @@ function session_init() {
                 $keys = array_keys($result);
                 foreach ($keys as &$key)
                     if ($key != "password") // Ignore the password, obviously.
-                        $_SESSION[$key] = $result[$key];
+                        $_SESSION[$key] = htmlspecialchars($result[$key]);
             }
         } else logout();
     } else session_abort();
@@ -132,7 +132,7 @@ function logout() {
         <section class="portfolio-block call-to-action">
             <div class="container">
                 <div class="d-flex justify-content-center align-items-center content">
-                    <h3>Want to play?</h3><a href="/sign-up.php"><button class="btn btn-outline-primary btn-lg" type="button">Sign up</button></a>
+                    <h3>Want to play?</h3><a href='<?php echo $loggedIn ? "/place-bet.php" : "/sign-up.php"; ?>'><button class="btn btn-outline-primary btn-lg" type="button"><?php echo $loggedIn ? "Place bet" : "Sign up"; ?></button></a>
                 </div>
             </div>
         </section>

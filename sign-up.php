@@ -63,7 +63,7 @@ function session_init() {
                 $keys = array_keys($result);
                 foreach ($keys as &$key)
                     if ($key != "password") // Ignore the password, obviously.
-                        $_SESSION[$key] = $result[$key];
+                        $_SESSION[$key] = htmlspecialchars($result[$key]);
             }
         } else logout();
     } else session_abort();
