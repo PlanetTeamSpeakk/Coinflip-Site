@@ -1,0 +1,131 @@
+.leaderboard {
+  background: linear-gradient(rgb(40,40,40), rgb(20,20,20) 100%), rgb(23,27,30);
+  color: rgb(229,232,235);
+  margin-bottom: 0;
+}
+
+.leaderboard > tr, td, th {
+  border-bottom-color: rgb(50, 50, 50);
+  border-bottom-width: 1.5px !important;
+  max-width: 100px !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.leaderboard > :not(:last-child) > :last-child > * {
+  border-bottom-color: rgb(50, 50, 50);
+  border-bottom-width: 2.5px !important;
+}
+
+/* FIRST PLACE */
+
+.leaderboard > tbody > tr:first-child {
+  color: rgb(255, 215, 0);
+}
+
+.leaderboard > tbody > tr:first-child > td:first-child::before {
+  content: "🥇 ";
+}
+
+/* SECOND PLACE */
+
+.leaderboard > tbody > tr:nth-child(2) {
+  color: rgb(192, 192, 192);
+}
+
+.leaderboard > tbody > tr:nth-child(2) > td:first-child::before {
+  content: "🥈 ";
+}
+
+/* THIRD PLACE */
+
+.leaderboard > tbody > tr:nth-child(3) {
+  color: rgb(176, 141, 87);
+}
+
+.leaderboard > tbody > tr:nth-child(3) > td:first-child::before {
+  content: "🥉 ";
+}
+
+/* OTHER PLACES */
+
+.leaderboard > tbody > tr:nth-child(4) > td:first-child::before {
+  content: "#4 ";
+}
+
+.leaderboard > tbody > tr:nth-child(5) > td:first-child::before {
+  content: "#5 ";
+}
+
+.leaderboard > tbody > tr:nth-child(6) > td:first-child::before {
+  content: "#6 ";
+}
+
+.leaderboard > tbody > tr:nth-child(7) > td:first-child::before {
+  content: "#5 ";
+}
+
+.leaderboard > tbody > tr:nth-child(8) > td:first-child::before {
+  content: "#8 ";
+}
+
+.leaderboard > tbody > tr:nth-child(9) > td:first-child::before {
+  content: "#9 ";
+}
+
+.leaderboard > tbody > tr:nth-child(10) > td:first-child::before {
+  content: "#10 ";
+}
+
+.animated {
+  animation-duration: 2s;
+  animation-fill-mode: both;
+  animation-timing-function: ease-out;
+  animation-iteration-count: infinite;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  6% {
+    transform: translateY(0);
+  }
+  20% {
+    transform: translateY(-25px);
+  }
+  30% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-15px);
+  }
+  50% {
+    transform: translateY(0);
+  }
+  59% {
+    transform: translateY(-10px);
+  }
+  68% {
+    transform: translateY(0);
+  }
+  77% {
+    transform: translateY(-7px);
+  }
+  85% {
+    transform: translateY(0);
+  }
+  93% {
+    transform: translateY(-4px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.bounce {
+  animation-name: bounce;
+  animation-iteration-count: 1;
+}
+

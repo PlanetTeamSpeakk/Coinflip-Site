@@ -1,0 +1,47 @@
+.btn-outline-primary {
+  color: var(--bs-orange);
+  border-color: var(--bs-orange);
+}
+
+.btn-outline-primary:hover {
+  color: white;
+  background: var(--bs-orange);
+  border-color: var(--bs-orange);
+}
+
+.btn-primary {
+  filter: brightness(1);
+  background: var(--bs-orange);
+  border-color: var(--bs-orange);
+  transition: filter 300ms;
+}
+
+.btn-primary:hover {
+  filter: brightness(0.85);
+  background: var(--bs-orange);
+  border-color: var(--bs-orange);
+}
+
+.gradient {
+  background: linear-gradient(120deg, var(--bs-orange), var(--bs-yellow));
+  color: #fff;
+}
+
+main {
+  min-height: 90vh;
+}
+
+.navbar-text {
+  font-weight: bold;
+  display: block;
+}
+
+.cf-delete {
+  color: red;
+  transition: 0.2s;
+}
+
+.cf-delete:hover {
+  color: darkred;
+}
+
