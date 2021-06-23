@@ -5,27 +5,21 @@ function getSessionId() {
 }
 
 function deleteCoinflip(cf) {
-    $.post("/delete-coinflip.php", {"id": cf, "sessionId": getSessionId()}, res => {console.log(res); initTable();});
+    $.post("/delete-coinflip.php", {"id": cf, "sessionId": getSessionId()}, res => location.reload());
 }
 
-function responseHandler(res) {
-    $.each(res.rows, (i, row) => row.test = "yes");
-    return res;
+function placeBet() {
+    var coinSide = document.getElementById("coin-side");
+    coinSide = coinSide.options[coinSide.selectedIndex].value;
+    var betAmount = document.getElementById("bet-amount").value;
+    $.post("/create-coinflip.php", {"side": coinSide, "bet": betAmount, "sessionId": getSessionId()}, res => location.reload());
 }
 
 function operateFormatter(value, row, index) {
-    return [
-        '<a class="like" href="javascript:void(0)" title="Like">',
-        '<i class="fa fa-heart"></i>',
-        '</a>  ',
-        '<a class="remove" href="javascript:void(0)" title="Remove">',
-        '<i class="fa fa-trash"></i>',
-        '</a>'
-    ].join('');
+    return "";
 }
 
 function removeFormatter(value, row, index) {
-    // console.log(value, row, index);
     return row.user == cfSession.username ? '<a class="cf-delete" href="javascript:deleteCoinflip(' + row.id + ')" title="Delete"><i class="fa fa-trash" aria-hidden="true"></i></a>' : "";
 }
 
@@ -34,15 +28,15 @@ function userFooterFormatter(data) {
 }
 
 function sideFooterFormatter(data) {
-    return "<select class='form-select' aria-label='Select coin side'><option selected>Select coin side</option><option value='HEADS'>HEADS</option><option value='TAILS'>TAILS</option></select>";
+    return "<select id='coin-side' class='form-select' aria-label='Select coin side'><option selected>Select coin side</option><option value='HEADS'>HEADS</option><option value='TAILS'>TAILS</option></select>";
 }
 
 function betFooterFormatter(data) {
-    
+    return "<input id='bet-amount' class='form-control' aria-label='Insert bet amount' type='number' placeholder='Insert bet amount' max='" + cfSession.balance + "' />";
 }
 
 function playFooterFormatter(data) {
-    
+    return "<button class='btn btn-outline-primary' type='submit' onclick='placeBet()'>Place Bet</button>";
 }
 
 function initTable() {
