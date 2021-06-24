@@ -45,3 +45,23 @@ main {
   color: darkred;
 }
 
+.page-item.active .page-link {
+  background-color: var(--bs-orange) !important;
+  border-color: var(--bs-orange) !important;
+  color: white;
+}
+
+.page-link:hover {
+  border-color: var(--bs-orange) !important;
+  color: var(--bs-orange) !important;
+}
+
+.page-item.active .page-link:hover {
+  color: white !important;
+}
+
+.page-link {
+  border-color: var(--bs-orange);
+  color: var(--bs-orange);
+}
+

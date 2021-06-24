@@ -28,10 +28,10 @@ if (isset($_POST["side"]) && ($_POST["side"] == "HEADS" || $_POST["side"] == "TA
 				if ($stmt->execute()) {
 					echo "ok";
 					exit();
-				} else echo "coinflip creation unsuccessful";
-			} else echo "bal removal unsuccessful";
-		} else echo "bal too low ".$bal." ".$bet;
-	} else echo "result null";
+				}
+			}
+		}
+	}
 }
 
 echo "not ok";

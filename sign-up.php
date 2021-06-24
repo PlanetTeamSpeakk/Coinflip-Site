@@ -84,6 +84,14 @@ function logout() {
     session_abort();
     session_destroy();
 }
+
+function cfExists($id) {
+    global $db;
+    $stmt = $db->prepare("SELECT * FROM coinflips WHERE id=?;");
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    return $stmt->get_result()->fetch_assoc() !== FALSE;
+}
 ?>
     <script>
         document.getElementById("phpcode").remove();

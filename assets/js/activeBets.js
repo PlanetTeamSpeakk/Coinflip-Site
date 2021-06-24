@@ -1,5 +1,6 @@
 var $table = $('#table');
 
+// UTILITY FUNCTIONS
 function getSessionId() {
     return Object.fromEntries(document.cookie.split("; ").map(s => s.split("=", 2))).PHPSESSID;
 }
@@ -9,20 +10,27 @@ function deleteCoinflip(cf) {
 }
 
 function placeBet() {
+    // TODO confirm side is selected and bet is filled in before sending, if not, show alert that disappears after 2 seconds.
     var coinSide = document.getElementById("coin-side");
     coinSide = coinSide.options[coinSide.selectedIndex].value;
     var betAmount = document.getElementById("bet-amount").value;
     $.post("/create-coinflip.php", {"side": coinSide, "bet": betAmount, "sessionId": getSessionId()}, res => location.reload());
 }
 
-function operateFormatter(value, row, index) {
-    return "";
-}
-
+// FORMATTERS
 function removeFormatter(value, row, index) {
     return row.user == cfSession.username ? '<a class="cf-delete" href="javascript:deleteCoinflip(' + row.id + ')" title="Delete"><i class="fa fa-trash" aria-hidden="true"></i></a>' : "";
 }
 
+function userFormatter(value, row, index) {
+    return "<span " + (row.userrank <= 3 ? "class='cf-" + (row.userrank == 1 ? "first" : row.userrank == 2 ? "second" : "third") + "'" : "") + ">" + row.user + "</span>";
+}
+
+function joinFormatter(value, row, index) {
+    return "<button class='btn btn-outline-primary' type='submit' onclick=''>Join</button>";
+}
+
+// FOOTER FORMATTERS
 function userFooterFormatter(data) {
     return cfSession["username"];
 }
@@ -35,7 +43,7 @@ function betFooterFormatter(data) {
     return "<input id='bet-amount' class='form-control' aria-label='Insert bet amount' type='number' placeholder='Insert bet amount' max='" + cfSession.balance + "' />";
 }
 
-function playFooterFormatter(data) {
+function joinFooterFormatter(data) {
     return "<button class='btn btn-outline-primary' type='submit' onclick='placeBet()'>Place Bet</button>";
 }
 
@@ -51,12 +59,14 @@ function initTable() {
             field: 'user',
             sortable: true,
             align: 'center',
+            formatter: userFormatter,
             footerFormatter: userFooterFormatter
         }, {
             title: 'Side',
             field: 'side',
             sortable: true,
             align: 'center',
+            width: 200,
             footerFormatter: sideFooterFormatter
         }, {
             title: 'Bet',
@@ -70,12 +80,11 @@ function initTable() {
             sortable: true,
             align: 'center'
         }, {
-            title: 'Play',
+            title: 'Join',
             align: 'center',
-            clickToSelect: false,
-            events: window.operateEvents,
-            formatter: operateFormatter,
-            footerFormatter: playFooterFormatter
+            width: 120,
+            formatter: joinFormatter,
+            footerFormatter: joinFooterFormatter
         }]
     });
 }

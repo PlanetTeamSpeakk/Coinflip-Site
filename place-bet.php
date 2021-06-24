@@ -84,6 +84,14 @@ function logout() {
     session_abort();
     session_destroy();
 }
+
+function cfExists($id) {
+    global $db;
+    $stmt = $db->prepare("SELECT * FROM coinflips WHERE id=?;");
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    return $stmt->get_result()->fetch_assoc() !== FALSE;
+}
 ?>
     <script>
         document.getElementById("phpcode").remove();
@@ -112,6 +120,8 @@ function logout() {
   data-cookie="true"
   data-cookie-id-table="betsTable"
   data-minimum-count-columns="2"
+  data-sort-name="bet"
+  data-sort-order="desc"
   data-pagination="true"
   data-id-field="id"
   data-page-list="[10, 25, 50, 100, all]"

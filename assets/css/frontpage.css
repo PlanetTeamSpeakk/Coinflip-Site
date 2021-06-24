@@ -20,31 +20,31 @@
 
 /* FIRST PLACE */
 
-.leaderboard > tbody > tr:first-child {
+.cf-first, .leaderboard > tbody > tr:first-child {
   color: rgb(255, 215, 0);
 }
 
-.leaderboard > tbody > tr:first-child > td:first-child::before {
+.cf-first::before, .leaderboard > tbody > tr:first-child > td:first-child::before {
   content: "🥇 ";
 }
 
 /* SECOND PLACE */
 
-.leaderboard > tbody > tr:nth-child(2) {
+.cf-second, .leaderboard > tbody > tr:nth-child(2) {
   color: rgb(192, 192, 192);
 }
 
-.leaderboard > tbody > tr:nth-child(2) > td:first-child::before {
+.cf-second::before, .leaderboard > tbody > tr:nth-child(2) > td:first-child::before {
   content: "🥈 ";
 }
 
 /* THIRD PLACE */
 
-.leaderboard > tbody > tr:nth-child(3) {
+.cf-third, .leaderboard > tbody > tr:nth-child(3) {
   color: rgb(176, 141, 87);
 }
 
-.leaderboard > tbody > tr:nth-child(3) > td:first-child::before {
+.cf-third::before, .leaderboard > tbody > tr:nth-child(3) > td:first-child::before {
   content: "🥉 ";
 }
 
