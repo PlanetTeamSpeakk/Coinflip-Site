@@ -6,14 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Coinflip - Sign Up</title>
     <meta name="description" content="Create an account on our Coinflip website.">
-    <link rel="icon" type="image/png" sizes="835x835" href="assets/img/coin.png">
-    <link rel="icon" type="image/png" sizes="835x835" href="assets/img/coin.png">
-    <link rel="icon" type="image/png" sizes="835x835" href="assets/img/coin.png">
-    <link rel="icon" type="image/png" sizes="835x835" href="assets/img/coin.png">
-    <link rel="icon" type="image/png" sizes="835x835" href="assets/img/coin.png">
+    <link rel="icon" type="image/svg+xml" sizes="512x512" href="assets/img/coin.svg">
+    <link rel="icon" type="image/svg+xml" sizes="512x512" href="assets/img/coin.svg">
+    <link rel="icon" type="image/svg+xml" sizes="512x512" href="assets/img/coin.svg">
+    <link rel="icon" type="image/svg+xml" sizes="512x512" href="assets/img/coin.svg">
+    <link rel="icon" type="image/svg+xml" sizes="512x512" href="assets/img/coin.svg">
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400,700">
+    <link rel="stylesheet" href="assets/css/flippingcoin.css">
     <link rel="stylesheet" href="assets/css/frontpage.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/css/pikaday.min.css">
     <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.css">
@@ -175,7 +176,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["username"]) && isset(
     </main>
     <footer class="page-footer navbar-static-bottom">
         <div class="container">
-            <p>Copyright © 2021 Tygo Mourits &amp; Damian Plomp</p>
+            <p>Copyright © 2021 Tygo &amp; Damian</p>
         </div>
     </footer>
     <script src="assets/js/jquery.min.js"></script>
@@ -189,6 +190,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["username"]) && isset(
     <script src="https://kit.fontawesome.com/7e8ccfcda5.js"></script>
     <script src="assets/js/theme.js"></script>
     <script src="assets/js/activeBets.js"></script>
+    <script src="assets/js/flippingcoin.js"></script>
 </body>
 
 </html>

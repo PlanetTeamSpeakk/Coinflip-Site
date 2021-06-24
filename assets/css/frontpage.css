@@ -63,7 +63,7 @@
 }
 
 .leaderboard > tbody > tr:nth-child(7) > td:first-child::before {
-  content: "#5 ";
+  content: "#7 ";
 }
 
 .leaderboard > tbody > tr:nth-child(8) > td:first-child::before {

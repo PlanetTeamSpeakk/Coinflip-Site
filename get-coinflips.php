@@ -44,5 +44,5 @@ function formatTime($epoch) {
 	if ($now - $epoch < 60) return ($now - $epoch)." second".($now - $epoch == 1 ? "" : "s")." ago";
 	else if ($now - $epoch < 3600) return intval(($now - $epoch) / 60)." minute".($now - $epoch < 120 ? "" : "s")." ago";
 	else if ($now - $epoch < 86400) return intval(($now - $epoch) / 3600)." hour".($now - $epoch < 7200 ? "" : "s")." ago";
-	else return (new DateTime())->setTimestamp($epoch)->format("H:i:s d-m-Y");
+	else return (new DateTime())->setTimestamp($epoch)->format("d-m-Y");
 }

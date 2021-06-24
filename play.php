@@ -6,14 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Coinflip - Play</title>
     <meta name="description" content="Play Coinflip against your friends!">
-    <link rel="icon" type="image/png" sizes="835x835" href="assets/img/coin.png">
-    <link rel="icon" type="image/png" sizes="835x835" href="assets/img/coin.png">
-    <link rel="icon" type="image/png" sizes="835x835" href="assets/img/coin.png">
-    <link rel="icon" type="image/png" sizes="835x835" href="assets/img/coin.png">
-    <link rel="icon" type="image/png" sizes="835x835" href="assets/img/coin.png">
+    <link rel="icon" type="image/svg+xml" sizes="512x512" href="assets/img/coin.svg">
+    <link rel="icon" type="image/svg+xml" sizes="512x512" href="assets/img/coin.svg">
+    <link rel="icon" type="image/svg+xml" sizes="512x512" href="assets/img/coin.svg">
+    <link rel="icon" type="image/svg+xml" sizes="512x512" href="assets/img/coin.svg">
+    <link rel="icon" type="image/svg+xml" sizes="512x512" href="assets/img/coin.svg">
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400,700">
+    <link rel="stylesheet" href="assets/css/flippingcoin.css">
     <link rel="stylesheet" href="assets/css/frontpage.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/css/pikaday.min.css">
     <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.css">
@@ -123,12 +124,18 @@ else {
     // Already checked in the condition if the coinflip exists,
     // so no harm in just chucking the id from the query in the sql query.
     $cf = $db->query("SELECT * FROM coinflips WHERE id=".$_GET["cf"])->fetch_assoc();
-    $opponent = $db->query("SELECT id, username, balance FROM users WHERE id=".$cf["user"])->fetch_assoc();
-    if ($opponent["id"] == $_SESSION["id"]) {
+    if ($_SESSION["balance"] < $cf["bet"] || ) {
         echo "<script>location.pathname = '/';</script>";
         exit();
     } else {
-        $opponent["rank"] = get_rank($opponent["id"]);
+        $db->query("UPDATE users SET balance=balance-".strval($cf["bet"])." WHERE id=".$_SESSION["user"]);
+        echo "<script>var cf = JSON.parse('".str_replace("'", "\\'", json_encode($cf))."');</script>";
+        
+        $opponent = $db->query("SELECT id, username, balance FROM users WHERE id=".$cf["user"])->fetch_assoc();
+        if ($opponent["id"] == $_SESSION["id"]) {
+            echo "<script>location.pathname = '/';</script>";
+            exit();
+        } else $opponent["rank"] = get_rank($opponent["id"]);
     }
 }
 ?>
@@ -136,12 +143,14 @@ else {
         <section class="portfolio-block">
             <div class="container">
                 <div class="heading" style="margin-bottom: 30px;"><h2>Play against <span style="color: var(--bs-orange);"><?php echo $opponent["username"]; ?></span> for <span style="color: var(--bs-orange);">$<?php echo format_money(intval($cf["bet"])); ?></span></h2></div>
-                <div class="row">
-                    <div class="col text-center align-middle"><h4 <?php echo $_SESSION["rank"] <= 3 ? "class='cf-".($_SESSION["rank"] == 1 ? "first" : ($_SESSION["rank"] == 2 ? "second" : "third"))."'" : ""; ?>><?php echo $_SESSION["username"]; ?></h4>
+                <div class="row align-items-center">
+                    <div class="col text-center"><h4 <?php echo $_SESSION["rank"] <= 3 ? "class='cf-".($_SESSION["rank"] == 1 ? "first" : ($_SESSION["rank"] == 2 ? "second" : "third"))."'" : ""; ?>><?php echo $_SESSION["username"]; ?></h4>
 <h6>$<?php echo format_money($_SESSION["balance"]); ?></h6>
 <h6><?php echo $cf["side"] == "HEADS" ? "TAILS" : "HEADS"; ?></h6></div>
-                    <div class="col"></div>
-                    <div class="col text-center align-middle"><h4 <?php echo $opponent["rank"] <= 3 ? "class='cf-".($opponent["rank"] == 1 ? "first" : ($opponent["rank"] == 2 ? "second" : "third"))."'" : ""; ?>><?php echo $opponent["username"]; ?></h4>
+                    <div class="col d-flex justify-content-center">
+                        <div id="cf-coin"></div>
+                    </div>
+                    <div class="col text-center"><h4 <?php echo $opponent["rank"] <= 3 ? "class='cf-".($opponent["rank"] == 1 ? "first" : ($opponent["rank"] == 2 ? "second" : "third"))."'" : ""; ?>><?php echo $opponent["username"]; ?></h4>
 <h6>$<?php echo format_money($opponent["balance"]); ?></h6>
 <h6><?php echo $cf["side"]; ?></h6></div>
                 </div>
@@ -150,7 +159,7 @@ else {
     </main>
     <footer class="page-footer navbar-static-bottom">
         <div class="container">
-            <p>Copyright © 2021 Tygo Mourits &amp; Damian Plomp</p>
+            <p>Copyright © 2021 Tygo &amp; Damian</p>
         </div>
     </footer>
     <script src="assets/js/jquery.min.js"></script>
@@ -164,6 +173,7 @@ else {
     <script src="https://kit.fontawesome.com/7e8ccfcda5.js"></script>
     <script src="assets/js/theme.js"></script>
     <script src="assets/js/activeBets.js"></script>
+    <script src="assets/js/flippingcoin.js"></script>
 </body>
 
 </html>

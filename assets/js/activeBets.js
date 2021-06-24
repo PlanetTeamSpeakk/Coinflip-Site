@@ -17,6 +17,10 @@ function placeBet() {
     $.post("/create-coinflip.php", {"side": coinSide, "bet": betAmount, "sessionId": getSessionId()}, res => location.reload());
 }
 
+function play(id, bet) {
+    if (bet <= parseInt(cfSession.balance)) window.location = window.location.origin + "/play.php?cf=" + id;
+}
+
 // FORMATTERS
 function removeFormatter(value, row, index) {
     return row.user == cfSession.username ? '<a class="cf-delete" href="javascript:deleteCoinflip(' + row.id + ')" title="Delete"><i class="fa fa-trash" aria-hidden="true"></i></a>' : "";
@@ -27,7 +31,7 @@ function userFormatter(value, row, index) {
 }
 
 function joinFormatter(value, row, index) {
-    return "<button class='btn btn-outline-primary' type='submit' onclick=''>Join</button>";
+    return row.user == cfSession.username ? "<div style='height: 38px;'></div>" : "<button class='btn btn-outline-primary' type='submit' onclick='play(" + row.id + ", " + row.bet.substr(1).replace(",", "") + ")'>Join</button>";
 }
 
 // FOOTER FORMATTERS

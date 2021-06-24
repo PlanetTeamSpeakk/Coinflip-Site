@@ -1,0 +1,27 @@
+#cf-coin {
+  width: 14vw;
+  height: 14vw;
+  background-image: url("../../assets/img/tails.svg");
+  background-size: 14vw;
+  transform: rotateX(0);
+  animation: flip 0.2s linear 0s 12 alternate;
+}
+
+@keyframes flip {
+  0% {
+    transform: rotateX(0);
+    background-image: url("../../assets/img/heads.svg");
+  }
+  50% {
+    transform: rotateX(90deg);
+    background-image: url("../../assets/img/heads.svg");
+  }
+  50.1% {
+    background-image: url("../../assets/img/tails.svg");
+  }
+  99% {
+    transform: rotateX(0);
+    background-image: url("../../assets/img/tails.svg");
+  }
+}
+
