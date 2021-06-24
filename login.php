@@ -31,6 +31,8 @@ setlocale(LC_MONETARY, "en_GB.utf8");
 // This db variable gets used for all queries in this request.
 $db = mysqli_connect();
 $db->select_db("coinflip");
+// Create temp rank table to get users' rank.
+$db->query("CREATE TEMPORARY TABLE IF NOT EXISTS userRanks (PRIMARY KEY (id), INDEX(rank)) AS (SELECT id, ROW_NUMBER() OVER (ORDER BY balance DESC) rank FROM users);");
 
 if (isset($_COOKIE["PHPSESSID"])) {
     // Continue session if one is available and valid.
@@ -66,6 +68,7 @@ function session_init() {
                 foreach ($keys as &$key)
                     if ($key != "password") // Ignore the password, obviously.
                         $_SESSION[$key] = htmlspecialchars($result[$key]);
+                    $_SESSION["rank"] = get_rank($_SESSION["user"]);
                     echo "<script>window.cfSession = JSON.parse('".str_replace("'", "\\'", json_encode($_SESSION))."');</script>";
             }
         } else logout();
@@ -85,12 +88,17 @@ function logout() {
     session_destroy();
 }
 
-function cfExists($id) {
+function cf_exists($id) {
     global $db;
     $stmt = $db->prepare("SELECT * FROM coinflips WHERE id=?;");
     $stmt->bind_param("i", $id);
     $stmt->execute();
-    return $stmt->get_result()->fetch_assoc() !== FALSE;
+    return $stmt->get_result()->fetch_assoc() !== NULL;
+}
+
+function get_rank($userId) {
+    global $db;
+    return $db->query("SELECT id as pid, (SELECT rank FROM userRanks WHERE id=pid) AS rank FROM users WHERE id=$userId;")->fetch_assoc()["rank"];
 }
 ?>
     <script>
@@ -141,7 +149,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["username"]) && isset(
                 <div class="heading" style="margin-bottom: 30px;">
                     <h2>LOGIN</h2>
                 </div>
-                <form oninput="emailConfirm.setCustomValidity(emailConfirm.value != email.value ? &#39;Emails do not match.&#39; : &#39;&#39;); passwordConfirm.setCustomValidity(passwordConfirm.value != password.value ? &#39;Passwords do not match.&#39; : &#39;&#39;); tos.setCustomValidity(!tos.checked ? &#39;You must agree with our Terms of Service.&#39; : &#39;&#39;);" method="post">
+                <form method="post">
                     <div>
                         <div class="row">
                             <div class="col">
