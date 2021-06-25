@@ -4,8 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Coinflip - Play</title>
-    <meta name="description" content="Play Coinflip against your friends!">
+    <title>Coinflip - Play Coinflips</title>
+    <meta name="description" content="Play coinflip on Coinflip.">
     <link rel="icon" type="image/svg+xml" sizes="512x512" href="assets/img/coin.svg">
     <link rel="icon" type="image/svg+xml" sizes="512x512" href="assets/img/coin.svg">
     <link rel="icon" type="image/svg+xml" sizes="512x512" href="assets/img/coin.svg">
@@ -118,42 +118,25 @@ function get_rank($userId) {
 </ul>
 </div>
         </div>
-    </nav><?php
-if (!isset($_GET["cf"]) || !cf_exists($_GET["cf"]) || !$loggedIn) echo "<script>location.pathname = '/';</script>";
-else {
-    // Already checked in the condition if the coinflip exists,
-    // so no harm in just chucking the id from the query in the sql query.
-    $cf = $db->query("SELECT * FROM coinflips WHERE id=".$_GET["cf"])->fetch_assoc();
-    if ($_SESSION["balance"] < $cf["bet"] || $_SESSION["user"] == $cf["user"]) {
-        echo "<script>location.pathname = '/';</script>";
-        exit();
-    } else {
-        $db->query("UPDATE users SET balance=balance-".strval($cf["bet"])." WHERE id=".$_SESSION["user"]);
-        echo "<script>var cf = JSON.parse('".str_replace("'", "\\'", json_encode($cf))."');</script>";
-        
-        $opponent = $db->query("SELECT id, username, balance FROM users WHERE id=".$cf["user"])->fetch_assoc();
-        if ($opponent["id"] == $_SESSION["id"]) {
-            echo "<script>location.pathname = '/';</script>";
-            exit();
-        } else $opponent["rank"] = get_rank($opponent["id"]);
-    }
-}
-?>
+    </nav>
     <main class="page">
         <section class="portfolio-block">
             <div class="container">
-                <div class="heading" style="margin-bottom: 30px;"><h2>Play against <span style="color: var(--bs-orange);"><?php echo $opponent["username"]; ?></span> for <span style="color: var(--bs-orange);">$<?php echo format_money(intval($cf["bet"])); ?></span></h2></div>
-                <div class="row align-items-center">
-                    <div class="col text-center"><h4 <?php echo $_SESSION["rank"] <= 3 ? "class='cf-".($_SESSION["rank"] == 1 ? "first" : ($_SESSION["rank"] == 2 ? "second" : "third"))."'" : ""; ?>><?php echo $_SESSION["username"]; ?></h4>
-<h6>$<?php echo format_money($_SESSION["balance"]); ?></h6>
-<h6><?php echo $cf["side"] == "HEADS" ? "TAILS" : "HEADS"; ?></h6></div>
-                    <div class="col d-flex justify-content-center">
-                        <div id="cf-coin"></div>
-                    </div>
-                    <div class="col text-center"><h4 <?php echo $opponent["rank"] <= 3 ? "class='cf-".($opponent["rank"] == 1 ? "first" : ($opponent["rank"] == 2 ? "second" : "third"))."'" : ""; ?>><?php echo $opponent["username"]; ?></h4>
-<h6>$<?php echo format_money($opponent["balance"]); ?></h6>
-<h6><?php echo $cf["side"]; ?></h6></div>
-                </div>
+                <div class="heading" style="margin-bottom: 30px;">
+                    <h2>Your Transactions</h2>
+                </div><table
+  id="transactions"
+  data-cookie="true"
+  data-cookie-id-table="transactionsTable"
+  data-minimum-count-columns="2"
+  data-sort-name="date"
+  data-sort-order="desc"
+  data-pagination="true"
+  data-page-list="[10, 25, 50, 100, all]"
+  data-side-pagination="server"
+  data-url="/get-transactions.php"
+  data-query-params="alterQueryParams">
+</table>
             </div>
         </section>
     </main>

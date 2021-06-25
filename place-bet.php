@@ -112,7 +112,7 @@ function get_rank($userId) {
     ?>
     <li class="nav-item"><a class="nav-link" href="sign-up.php"<?php if ($loggedIn) echo " hidden"; ?>>Sign up</a></li>
     <li class="nav-item"><a class="nav-link" href="login.php"<?php if ($loggedIn) echo " hidden"; ?>>Login</a></li>
-    <li class="nav-item"><span class="navbar-text"<?php if (!$loggedIn) echo " hidden"; ?>>Balance: $<?php if ($loggedIn) echo format_money($_SESSION["balance"]); ?></span></li>
+    <li class="nav-item"><a class="nav-link" href="transactions.php"<?php if (!$loggedIn) echo " hidden"; ?>>Balance: $<?php if ($loggedIn) echo format_money($_SESSION["balance"]); ?></a></li>
     <li class="nav-item"><a class="nav-link" href="place-bet.php"<?php if (!$loggedIn) echo " hidden"; ?>>Place bet</a></li>
     <li class="nav-item"><a class="nav-link" href="logout.php"<?php if (!$loggedIn) echo " hidden"; ?>><?php if ($loggedIn) echo $_SESSION["username"]; ?> (logout)</a></li>
 </ul>
@@ -125,14 +125,13 @@ function get_rank($userId) {
                 <div class="heading" style="margin-bottom: 30px;">
                     <h2>Active Bets</h2>
                 </div><table
-  id="table"
+  id="active-bets"
   data-cookie="true"
   data-cookie-id-table="betsTable"
   data-minimum-count-columns="2"
   data-sort-name="bet"
   data-sort-order="desc"
   data-pagination="true"
-  data-id-field="id"
   data-page-list="[10, 25, 50, 100, all]"
   data-show-footer="true"
   data-side-pagination="server"
@@ -158,6 +157,7 @@ function get_rank($userId) {
     <script src="assets/js/theme.js"></script>
     <script src="assets/js/activeBets.js"></script>
     <script src="assets/js/flippingcoin.js"></script>
+    <script src="assets/js/transactions.js"></script>
 </body>
 
 </html>
