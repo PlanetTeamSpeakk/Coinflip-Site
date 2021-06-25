@@ -8,8 +8,9 @@ if (isset($_POST["id"]) && ctype_digit($_POST["id"]) && isset($_POST["sessionId"
 	$stmt->bind_param("s", $_POST["sessionId"]);
 	$stmt->execute();
 	$session = $stmt->get_result()->fetch_assoc();
+	$user = $db->query("SELECT id, balance FROM users WHERE id=".$session["user"])->fetch_assoc();
 	
-	if ($cf && $session) {
+	if ($cf && $session && $cf["user"] != $session["user"] && $cf["bet"] <= $user["balance"]) {
 		// If 0, HEADS wins, otherwise TAILS wins.
 		$win = random_int(0, 1);
 		$won = $win == 0 && $cf["side"] == "HEADS" || $win == 1 && $cf["side"] == "TAILS";

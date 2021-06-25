@@ -39,13 +39,12 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
-    <ellipse
-       style="fill:#cc9933;fill-rule:evenodd;stroke-width:0.264583;fill-opacity:1"
+    <circle
+       style="fill:#cc9933;fill-opacity:1;stroke-width:0.356068"
        id="path870"
-       cx="67.786079"
-       cy="67.743553"
-       rx="67.701027"
-       ry="67.658501" />
+       cx="67.73333"
+       cy="67.73333"
+       r="67.701027" />
     <circle
        style="fill:#eec75e;fill-opacity:1;stroke-width:0.293781"
        id="path962"

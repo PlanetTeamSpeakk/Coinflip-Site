@@ -124,7 +124,7 @@ else {
     // Already checked in the condition if the coinflip exists,
     // so no harm in just chucking the id from the query in the sql query.
     $cf = $db->query("SELECT * FROM coinflips WHERE id=".$_GET["cf"])->fetch_assoc();
-    if ($_SESSION["balance"] < $cf["bet"] || ) {
+    if ($_SESSION["balance"] < $cf["bet"] || $_SESSION["user"] == $cf["user"]) {
         echo "<script>location.pathname = '/';</script>";
         exit();
     } else {
