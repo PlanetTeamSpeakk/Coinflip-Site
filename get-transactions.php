@@ -16,7 +16,7 @@ if (isset($_GET["sessionId"])) {
 		$db->query("CREATE TEMPORARY TABLE IF NOT EXISTS userRanks (PRIMARY KEY (id), INDEX(rank)) AS (SELECT id, ROW_NUMBER() OVER (ORDER BY balance DESC) rank FROM users);");
 		
 		$query = "SELECT id, user, opponent, (SELECT username FROM users WHERE id=opponent) AS opponentName, (SELECT rank FROM userRanks WHERE id=opponent) AS opponentRank, side, bet, won, UNIX_TIMESTAMP(date) AS date FROM transactions WHERE user=".$session["user"];
-		if (isset($_GET["sort"]) && in_array($_GET["sort"], array("opponentName", "side", "bet", "date"))) $query = $query." ORDER BY ".$_GET["sort"]." ".$_GET["order"];
+		if (isset($_GET["sort"]) && in_array($_GET["sort"], array("opponentName", "side", "bet", "date", "won"))) $query = $query." ORDER BY ".$_GET["sort"]." ".$_GET["order"];
 		if (isset($_GET["limit"]) && ctype_digit($_GET["limit"])) {
 			$query = $query." LIMIT ".$_GET["limit"];
 			if (isset($_GET["offset"]) && ctype_digit($_GET["offset"])) $query = $query." OFFSET ".$_GET["offset"];
@@ -28,6 +28,7 @@ if (isset($_GET["sessionId"])) {
 		foreach ($result as &$row) {
 			$row["date"] = formatTime($row["date"]);
 			$row["bet"] = "$".substr(money_format("%.0i", $row["bet"]), 3);
+			$row["won"] = $row["won"] ? "Yes" : "No";
 		}
 		
 		echo json_encode(array("total" => $count, "totalNotFiltered" => $count, "rows" => $result), JSON_NUMERIC_CHECK | JSON_PRETTY_PRINT);
