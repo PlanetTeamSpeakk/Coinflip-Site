@@ -195,7 +195,7 @@ function checkExists($db, $column, $value) {
     </main>
     <footer class="page-footer navbar-static-bottom">
         <div class="container">
-            <p>Copyright © 2021 Tygo &amp; Damian</p>
+            <p style="margin-bottom: 0;">Copyright © 2021 Tygo &amp; Damian</p><a href="https://github.com/PlanetTeamSpeakk/Coinflip-Site" style="font-size: 1rem;">Source Code</a>
         </div>
     </footer>
     <script src="assets/js/jquery.min.js"></script>

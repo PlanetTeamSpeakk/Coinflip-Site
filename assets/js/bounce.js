@@ -7,6 +7,9 @@ if (coin) {
         }
     });
     coin.addEventListener("click", event => {
-        console.log("Clicked coin", event);
+        if (event.isTrusted) {
+            // TODO make clicking the button on the home page give one coin.
+            // Might add later, won't do now, though.
+        }
     });
 }
