@@ -31,7 +31,7 @@ function userFormatter(value, row, index) {
 }
 
 function joinFormatter(value, row, index) {
-    return row.user == cfSession.username ? "<div style='height: 38px;'></div>" : "<button class='btn btn-outline-primary' type='submit' onclick='play(" + row.id + ", " + row.bet.substr(1).replace(",", "") + ")'>Join</button>";
+    return row.username == cfSession.username ? "<div style='height: 38px;'></div>" : "<button class='btn btn-outline-primary' type='submit' onclick='play(" + row.id + ", " + row.bet.substr(1).replace(",", "") + ")'>Join</button>";
 }
 
 // FOOTER FORMATTERS

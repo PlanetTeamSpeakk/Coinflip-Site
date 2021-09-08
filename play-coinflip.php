@@ -12,7 +12,7 @@ if (isset($_POST["id"]) && ctype_digit($_POST["id"]) && isset($_POST["sessionId"
 	
 	if ($cf && $session && $cf["user"] != $session["user"] && $cf["bet"] <= $user["balance"]) {
 		// If 0, HEADS wins, otherwise TAILS wins.
-		$win = random_int(0, 1);
+		$win = mt_rand(0, 1);
 		$won = $win == 0 && $cf["side"] == "HEADS" || $win == 1 && $cf["side"] == "TAILS";
 		error_log("win: ".$win." ".$won." ".$cf["side"]);
 		error_log("UPDATE users SET balance=balance+".strval($cf["bet"])." WHERE id=".($won ? $cf["user"] : $session["user"]));

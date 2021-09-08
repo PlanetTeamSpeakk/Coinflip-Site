@@ -120,7 +120,22 @@ function get_rank($userId) {
         </div>
     </nav>
     <main class="page">
-        <section class="portfolio-block">
+        <section class="portfolio-block"><?php
+$stmt = $db->prepare("SELECT user, count(IF(won = 0, won, NULL)) AS losses, count(IF(won = 1, won, NULL)) AS wins FROM transactions WHERE user = ? GROUP BY user;");
+$stmt->bind_param("i", $_SESSION["user"]);
+$stmt->execute();
+$winsAndLosses = $stmt->get_result()->fetch_assoc();
+$wins = $winsAndLosses["wins"];
+$losses = $winsAndLosses["losses"];
+$total = $wins + $losses;
+$wins = number_format($wins / $total * 100, 2);
+$losses = number_format($losses / $total * 100, 2);
+?>
+
+<div id="win-bar" class="progress">
+    <div class="progress-bar progress-bar-striped" aria-valuenow="<?php echo $wins; ?>" aria-valuemin="0" aria-valuemax="100" style="background-color: limegreen; width: <?php echo $wins; ?>%;"><?php echo $wins; ?>%</div>
+    <div class="progress-bar progress-bar-striped" aria-valuenow="<?php echo $losses; ?>" aria-valuemin="0" aria-valuemax="100" style="background-color: indianred; width: <?php echo $losses; ?>%;"><?php echo $losses; ?>%</div>
+</div>
             <div class="container">
                 <div class="heading" style="margin-bottom: 30px;">
                     <h2>Your Transactions</h2>

@@ -65,3 +65,13 @@ main {
   color: var(--bs-orange);
 }
 
+#win-bar {
+  min-width: 240px;
+  position: absolute;
+  width: 20%;
+  margin-left: auto;
+  margin-right: 0;
+  right: 10%;
+  top: 15%;
+}
+
